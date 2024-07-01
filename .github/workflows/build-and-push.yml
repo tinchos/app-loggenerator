@@ -29,23 +29,19 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Verify Docker Login
+        run: docker info
+
       - name: Construir imagen Docker
         uses: docker/build-push-action@v4
         with:
           context: .
           file: Dockerfile
           push: true
-          no-cache: true
+#          no-cache: true
           tags: |
             mjcheveste/${{github.repository}}:latest
             mjcheveste/${{github.repository}}:1.0.${{github.run_number}}
-
-#      - name: Enviar metadatos de la imagen
-#        uses: docker/metadata-action@v1
-#        with:
-#          images: |
-#            mjcheveste/dotnet-pdf:latest
-#            mjcheveste/dotnet-pdf:1.0.${{github.run_number}}
 
       - name: Escanear imagen con Trivy
         uses: aquasecurity/trivy-action@master  # Replace with latest version if needed
