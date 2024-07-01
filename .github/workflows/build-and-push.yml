@@ -1,0 +1,62 @@
+run-name: Build ${{github.run_number}} by ${{github.actor}}
+# name: Construir y publicar imagen Docker
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  GitHub-Contexts:
+    name: Get GitHub context 📑
+    runs-on: ubuntu-latest
+    steps:    
+      - name: Dump GitHub context 
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configurar Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
+      - name: Construir imagen Docker
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          no-cache: true
+          tags: |
+            mjcheveste/${{github.repository}}:latest
+            mjcheveste/${{github.repository}}:1.0.${{github.run_number}}
+
+#      - name: Enviar metadatos de la imagen
+#        uses: docker/metadata-action@v1
+#        with:
+#          images: |
+#            mjcheveste/dotnet-pdf:latest
+#            mjcheveste/dotnet-pdf:1.0.${{github.run_number}}
+
+      - name: Escanear imagen con Trivy
+        uses: aquasecurity/trivy-action@master  # Replace with latest version if needed
+        with:
+          image-ref: mjcheveste/${{github.repository}}:latest  # Replace with your image name and tag
+          scanners: 'vuln'
+          format: sarif  # Optional: Specify output format (e.g., json, sarif)
+          output: 'trivy-results.sarif'
+          #fail-on-vuln: false  # Optional: Set to true to fail build on vulnerabilities
+
+
+
+# Referencias utiles
+# https://github.com/marketplace/actions/build-and-push-docker-images
