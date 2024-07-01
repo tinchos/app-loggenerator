@@ -40,13 +40,13 @@ jobs:
           push: true
 #          no-cache: true
           tags: |
-            mjcheveste/${{github.repository}}:latest
-            mjcheveste/${{github.repository}}:1.0.${{github.run_number}}
+            mjcheveste/app-loggenerator:latest
+            mjcheveste/app-loggenerator:1.0.${{github.run_number}}
 
       - name: Escanear imagen con Trivy
         uses: aquasecurity/trivy-action@master  # Replace with latest version if needed
         with:
-          image-ref: mjcheveste/${{github.repository}}:latest  # Replace with your image name and tag
+          image-ref: mjcheveste/app-loggenerator:latest  # Replace with your image name and tag
           scanners: 'vuln'
           format: sarif  # Optional: Specify output format (e.g., json, sarif)
           output: 'trivy-results.sarif'
