@@ -41,7 +41,7 @@ jobs:
 #          no-cache: true
           tags: |
             mjcheveste/app-loggenerator:latest
-            mjcheveste/app-loggenerator:1.0.${{github.run_number}}
+#            mjcheveste/app-loggenerator:1.0.${{github.run_number}}
 
       - name: Escanear imagen con Trivy
         uses: aquasecurity/trivy-action@0.20.0
