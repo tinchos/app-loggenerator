@@ -21,3 +21,5 @@ spec:
           value: "My custom log message"
         - name: LOG_LENGTH
           value: "20"
+        - name: LOG_PERIOD
+          value: "1"

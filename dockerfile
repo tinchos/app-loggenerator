@@ -19,5 +19,6 @@ USER loguser
 # definimos las variables para customizar el mensaje y cantidad de caracteres aleatorios
 ENV LOG_MESSAGE="Log message"
 ENV LOG_LENGTH=13
+ENV LOG_PERIOD=1
 
 CMD ["/generate-logs.sh"]
