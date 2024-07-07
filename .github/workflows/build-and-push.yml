@@ -49,14 +49,4 @@ jobs:
           image-ref: mjcheveste/app-loggenerator:latest
           scan-type: 'image'
           scan-ref: '.'
-          trivy-config: trivy.yaml
-          
-          #scanners: 'vuln'
-          #format: sarif
-          #output: 'trivy-results.sarif'
-          #fail-on-vuln: false  # Optional: Set to true to fail build on vulnerabilities
-
-
-
-# Referencias utiles
-# https://github.com/marketplace/actions/build-and-push-docker-images
+          trivy-config: ./trivy.yaml
