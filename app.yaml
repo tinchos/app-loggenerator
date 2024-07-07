@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-generator
+  namespace: <your namespace>
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-generator
+  template:
+    metadata:
+      labels:
+        app: log-generator
+    spec:
+      containers:
+      - name: log-generator
+        image: <your-docker-image-name>:<tag>
+        env:
+        - name: LOG_MESSAGE
+          value: "My custom log message"
+        - name: LOG_LENGTH
+          value: "20"
