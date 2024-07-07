@@ -44,12 +44,16 @@ jobs:
             mjcheveste/app-loggenerator:1.0.${{github.run_number}}
 
       - name: Escanear imagen con Trivy
-        uses: aquasecurity/trivy-action@master  # Replace with latest version if needed
+        uses: aquasecurity/trivy-action@0.20.0
         with:
-          image-ref: mjcheveste/app-loggenerator:latest  # Replace with your image name and tag
-          scanners: 'vuln'
-          format: sarif  # Optional: Specify output format (e.g., json, sarif)
-          output: 'trivy-results.sarif'
+          image-ref: mjcheveste/app-loggenerator:latest
+          scan-type: 'fs'
+          scan-ref: '.'
+          trivy-config: trivy.yaml
+          
+          #scanners: 'vuln'
+          #format: sarif
+          #output: 'trivy-results.sarif'
           #fail-on-vuln: false  # Optional: Set to true to fail build on vulnerabilities
 
 
