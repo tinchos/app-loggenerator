@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  log-generator:
+    # genera la imagen desde el Dockerfile local
+    build: .
+    environment:
+      LOG_MESSAGE: "Texto custom para salida de logs" # texto adicional
+      LOG_LENGTH: "25"  # longitud del caracteres aleatorios
+      LOG_PERIOD: "5" # periodo de tiempo en que genera log (seg)
+    command: ["/generate-logs.sh"]

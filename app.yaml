@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: log-generator
-  namespace: <your namespace>
+  #namespace: <your namespace>
 spec:
   replicas: 1
   selector:
@@ -15,11 +15,11 @@ spec:
     spec:
       containers:
       - name: log-generator
-        image: <your-docker-image-name>:<tag>
+        image: mjcheveste/app-loggenerator:latest
         env:
         - name: LOG_MESSAGE
-          value: "My custom log message"
+          value: "Mensaje personalizado"
         - name: LOG_LENGTH
-          value: "20"
+          value: "30"
         - name: LOG_PERIOD
-          value: "1"
+          value: "5"
