@@ -1,8 +1,0 @@
-# Global Options
-exit-code: 1
-severity: CRITICAL, HIGH
-quiet: false
-debug: false
-insecure: false
-Report Options:
-  format: table
