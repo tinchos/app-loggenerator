@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prometheus
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-server
+  namespace: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus-server
+  template:
+    metadata:
+      labels:
+        app: prometheus-server
+    spec:
+      containers:
+      - name: prometheus-server
+        image: prometheus:latest
+        ports:
+        - name: http
+          containerPort: 9090
+        volumeMounts:
+        - name: prometheus-data
+          mountPath: /prometheus
+      volumes:
+      - name: prometheus-data
+        emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-server
+  namespace: prometheus
+spec:
+  type: NodePort  # Change to NodePort
+  selector:
+    app: prometheus-server
+  ports:
+  - name: http
+    port: 9090
+    targetPort: 9090
+    nodePort: 31000  # Keep the nodePort configuration

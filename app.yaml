@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: log-generator
-  #namespace: <your namespace>
+  name: log-generator-cloud
+  namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: log-generator
+      app: log-generator-cloud
   template:
     metadata:
       labels:
-        app: log-generator
+        app: log-generator-cloud
     spec:
       containers:
-      - name: log-generator
+      - name: log-generator-cloud
         image: mjcheveste/app-loggenerator:latest
         env:
         - name: LOG_MESSAGE
-          value: "Mensaje personalizado"
+          value: "Mensaje personalizado namespace DEFAULT"
         - name: LOG_LENGTH
           value: "30"
         - name: LOG_PERIOD
